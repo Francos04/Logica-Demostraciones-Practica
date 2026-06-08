@@ -1,0 +1,817 @@
+\documentclass[11pt, a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{babel}
+\usepackage{amsmath, amssymb}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage{titlesec}
+
+
+\usepackage{fancyhdr}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+\geometry{top=2cm, bottom=2.2cm, left=2.2cm, right=2.2cm}
+
+\definecolor{azul}{RGB}{30,100,180}
+\definecolor{azulclaro}{RGB}{220,235,255}
+\definecolor{gris}{RGB}{100,100,100}
+\definecolor{grisclaro}{RGB}{245,246,248}
+\definecolor{linea}{RGB}{180,200,230}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancyhead[L]{\small\color{gris}Logica y Resolucion de Problemas}
+\fancyhead[R]{\small\color{gris}Practica 4 --- Calculo Ecuacional}
+\fancyfoot[C]{\small\color{gris}\thepage}
+
+\titleformat{\section}[block]
+  {\large\bfseries\color{azul}}{}
+  {0pt}{\colorbox{azulclaro}{\parbox{\dimexpr\linewidth-2\fboxsep}{\strut #1\strut}}}
+\titlespacing{\section}{0pt}{14pt}{6pt}
+
+\newtcolorbox{thmbox}[3]{
+  breakable, enhanced,
+  colback=grisclaro, colframe=linea, boxrule=0.6pt, arc=4pt,
+  left=8pt, right=8pt, top=6pt, bottom=6pt,
+  title={\textbf{\color{azul}(#1)}\ \ $\vdash\;#2$%
+    \ifx&#3&\else\hfill\textit{\small\color{gris}(#3)}\fi},
+  attach boxed title to top left={yshift=-2pt,xshift=4pt},
+  boxed title style={colback=azulclaro,colframe=linea,arc=3pt,
+    left=4pt,right=4pt,top=2pt,bottom=2pt},
+  fonttitle=\small,
+}
+
+\newcommand{\fml}[1]{\par\noindent\hspace{1.4em}$\displaystyle #1$\par\vspace{1pt}}
+\newcommand{\jst}[1]{\par\noindent\hspace{1.4em}{\color{azul}$\equiv$}\ \texttt{\small\color{gris}[#1]}\par\vspace{1pt}}
+
+\newcommand{\T}{\top}
+\newcommand{\F}{\bot}
+\newcommand{\liff}{\equiv}
+\newcommand{\limp}{\rightarrow}
+
+\begin{document}
+
+\begin{center}
+  {\LARGE\bfseries\color{azul}Practica 4}\\[4pt]
+  {\large Calculo Ecuacional}\\[4pt]
+  {\color{gris}\small Logica y Resolucion de Problemas (3377)}
+  \vspace{4pt}\hrule height 0.8pt
+\end{center}
+\vspace{4pt}
+
+% ===========================================================
+\section{Proposicional --- Equivalencias (1--25)}
+% ===========================================================
+
+% -----------------------------------------------------------
+\begin{thmbox}{1}{\varphi \liff \varphi}{reflexividad}
+\fml{\varphi}
+\jst{ax.\ neutro $\liff$: $\varphi \liff (\T \liff \varphi)$}
+\fml{\T \liff \varphi}
+\jst{ax.\ conm.\ $\liff$: $(\T \liff \varphi) \liff (\varphi \liff \T)$}
+\fml{\varphi \liff \T}
+\jst{ax.\ neutro $\liff$: $(\varphi \liff \T) \liff \varphi$}
+\fml{\varphi \liff \varphi}
+\end{thmbox}
+
+% -----------------------------------------------------------
+\begin{thmbox}{2}{\F \limp \varphi}{}
+\fml{\F \limp \varphi}
+\jst{ax.\ implicacion: $\alpha \limp \beta \liff (\alpha \lor \beta \liff \beta)$}
+\fml{\F \lor \varphi \liff \varphi}
+\jst{ax.\ neutro $\lor$: $\F \lor \varphi \liff \varphi$}
+\fml{\varphi \liff \varphi}
+\jst{teo.\ (1): $\varphi \liff \varphi \liff \T$}
+\fml{\T}
+\end{thmbox}
+
+% -----------------------------------------------------------
+\begin{thmbox}{3}{\lnot\lnot\varphi \liff \varphi}{doble negacion}
+\fml{\lnot\lnot\varphi}
+\jst{ax.\ neq: $\lnot(\alpha \liff \beta) \liff (\lnot\alpha \liff \beta)$\ con $\alpha {=} \lnot\varphi,\ \beta {=} \T$}
+\fml{\lnot\varphi \liff \lnot\T}
+\jst{teo.\ (5): $\lnot\T \liff \F$}
+\fml{\lnot\varphi \liff \F}
+\jst{teo.\ (4): $\varphi \liff \F \liff \lnot\varphi$\ (conm.\ $\liff$ aplicado con $\varphi {:=} \lnot\varphi$)}
+\fml{\varphi}
+\end{thmbox}
+
+% -----------------------------------------------------------
+\begin{thmbox}{4}{\varphi \liff \F \liff \lnot\varphi}{}
+\fml{\varphi \liff \F}
+\jst{ax.\ neq: $\lnot(\alpha \liff \beta) \liff (\lnot\alpha \liff \beta)$\ con $\alpha {=} \varphi,\ \beta {=} \T$}
+\fml{\lnot(\varphi \liff \T)}
+\jst{ax.\ neutro $\liff$: $\varphi \liff \T \liff \varphi$}
+\fml{\lnot\varphi}
+\end{thmbox}
+
+% -----------------------------------------------------------
+\begin{thmbox}{5}{\F \liff \lnot\T}{}
+\fml{\F}
+\jst{ax.\ bivalencia: $\T \liff \lnot\F$}
+\fml{\lnot\F \liff \T}
+\jst{ax.\ conm.\ $\liff$}
+\fml{\T \liff \lnot\F}
+\jst{ax.\ neq: $\lnot(\alpha \liff \beta) \liff (\lnot\alpha \liff \beta)$\ con $\alpha {=} \F,\ \beta {=} \T$\ $\Rightarrow$\ $\T \liff \lnot\F \liff \lnot\T \liff \F$}
+\fml{\lnot\T \liff \F}
+\jst{ax.\ conm.\ $\liff$}
+\fml{\lnot\T}
+\end{thmbox}
+
+% -----------------------------------------------------------
+\begin{thmbox}{6}{\varphi \liff \psi \liff \lnot\varphi \liff \lnot\psi}{contrapositiva $\liff$}
+\fml{\varphi \liff \psi}
+\jst{ax.\ neq: $\lnot(\lnot\varphi \liff \psi) \liff (\lnot\lnot\varphi \liff \psi) \liff (\varphi \liff \psi)$\ $\Rightarrow$\ $\varphi \liff \psi \liff \lnot(\lnot\varphi \liff \psi)$}
+\fml{\lnot(\lnot\varphi \liff \psi)}
+\jst{ax.\ conm.\ $\liff$: $(\lnot\varphi \liff \psi) \liff (\psi \liff \lnot\varphi)$}
+\fml{\lnot(\psi \liff \lnot\varphi)}
+\jst{ax.\ neq: $\lnot(\psi \liff \lnot\varphi) \liff (\lnot\psi \liff \lnot\varphi)$}
+\fml{\lnot\psi \liff \lnot\varphi}
+\jst{ax.\ conm.\ $\liff$}
+\fml{\lnot\varphi \liff \lnot\psi}
+\end{thmbox}
+
+% -----------------------------------------------------------
+\begin{thmbox}{7}{\varphi \lor (\psi \lor \chi) \liff (\varphi \lor \psi) \lor (\varphi \lor \chi)}{dist.\ $\lor\lor$}
+\fml{\varphi \lor (\psi \lor \chi)}
+\jst{ax.\ idempotencia $\lor$: $\varphi \liff \varphi \lor \varphi$}
+\fml{(\varphi \lor \varphi) \lor (\psi \lor \chi)}
+\jst{ax.\ asoc.\ $\lor$: $(\varphi \lor \varphi) \lor (\psi \lor \chi) \liff \varphi \lor (\varphi \lor (\psi \lor \chi))$}
+\fml{\varphi \lor (\varphi \lor (\psi \lor \chi))}
+\jst{ax.\ asoc.\ $\lor$: $\varphi \lor (\psi \lor \chi) \liff (\varphi \lor \psi) \lor \chi$}
+\fml{\varphi \lor ((\varphi \lor \psi) \lor \chi)}
+\jst{ax.\ asoc.\ $\lor$: $\varphi \lor ((\varphi \lor \psi) \lor \chi) \liff (\varphi \lor (\varphi \lor \psi)) \lor \chi$}
+\fml{(\varphi \lor (\varphi \lor \psi)) \lor \chi}
+\jst{ax.\ asoc.\ $\lor$: $\varphi \lor (\varphi \lor \psi) \liff (\varphi \lor \varphi) \lor \psi$}
+\fml{((\varphi \lor \varphi) \lor \psi) \lor \chi}
+\jst{ax.\ idempotencia $\lor$: $\varphi \lor \varphi \liff \varphi$}
+\fml{(\varphi \lor \psi) \lor \chi}
+\jst{ax.\ conm.\ $\lor$: $(\varphi \lor \psi) \lor \chi \liff \chi \lor (\varphi \lor \psi)$}
+\fml{\chi \lor (\varphi \lor \psi)}
+\jst{ax.\ asoc.\ $\lor$}
+\fml{(\chi \lor \varphi) \lor \psi}
+\jst{ax.\ conm.\ $\lor$: $\chi \lor \varphi \liff \varphi \lor \chi$}
+\fml{(\varphi \lor \chi) \lor \psi}
+\jst{ax.\ conm.\ $\lor$: $(\varphi \lor \chi) \lor \psi \liff \psi \lor (\varphi \lor \chi)$}
+\fml{\psi \lor (\varphi \lor \chi)}
+\jst{ax.\ asoc.\ $\lor$}
+\fml{(\psi \lor \varphi) \lor \chi}
+\jst{ax.\ conm.\ $\lor$: $\psi \lor \varphi \liff \varphi \lor \psi$}
+\fml{(\varphi \lor \psi) \lor (\varphi \lor \chi)}
+\end{thmbox}
+
+% -----------------------------------------------------------
+\begin{thmbox}{8}{\varphi \lor \T \liff \T}{absorbente $\lor$}
+\fml{\varphi \lor \T}
+\jst{ax.\ tercero excluido: $\T \liff \varphi \lor \lnot\varphi$}
+\fml{\varphi \lor (\varphi \lor \lnot\varphi)}
+\jst{ax.\ asoc.\ $\lor$: $\varphi \lor (\varphi \lor \lnot\varphi) \liff (\varphi \lor \varphi) \lor \lnot\varphi$}
+\fml{(\varphi \lor \varphi) \lor \lnot\varphi}
+\jst{ax.\ idempotencia $\lor$: $\varphi \lor \varphi \liff \varphi$}
+\fml{\varphi \lor \lnot\varphi}
+\jst{ax.\ tercero excluido: $\varphi \lor \lnot\varphi \liff \T$}
+\fml{\T}
+\end{thmbox}
+
+% -----------------------------------------------------------
+\begin{thmbox}{9}{\varphi \lor \F \liff \varphi}{neutro $\lor$}
+\fml{\varphi \lor \F}
+\jst{teo.\ (11): $\F \liff \varphi \land \lnot\varphi$}
+\fml{\varphi \lor (\varphi \land \lnot\varphi)}
+\jst{teo.\ (15): absorcion $\varphi \lor (\varphi \land \psi) \liff \varphi$}
+\fml{\varphi}
+\end{thmbox}
+
+% -----------------------------------------------------------
+\begin{thmbox}{10}{\varphi \land (\psi \land \chi) \liff (\varphi \land \psi) \land \chi}{asoc.\ $\land$}
+\fml{\varphi \land (\psi \land \chi)}
+\jst{ax.\ regla dorada: $\alpha \land \beta \liff (\alpha \liff \beta) \liff \alpha \lor \beta$\ con $\alpha {=} \varphi,\ \beta {=} \psi \land \chi$}
+\fml{(\varphi \liff \psi \land \chi) \liff \varphi \lor (\psi \land \chi)}
+\jst{ax.\ regla dorada: $\psi \land \chi \liff (\psi \liff \chi) \liff \psi \lor \chi$}
+\fml{(\varphi \liff (\psi \liff \chi) \liff \psi \lor \chi) \liff \varphi \lor (\psi \land \chi)}
+\jst{ax.\ asoc.\ $\liff$: reagrupar $\varphi \liff (\psi \liff \chi) \liff \psi \lor \chi \liff (\varphi \liff \psi \liff \chi) \liff \psi \lor \chi$}
+\fml{((\varphi \liff \psi \liff \chi) \liff \psi \lor \chi) \liff \varphi \lor (\psi \land \chi)}
+\jst{teo.\ (25): dist.\ $\lor\land$: $\varphi \lor (\psi \land \chi) \liff (\varphi \lor \psi) \land (\varphi \lor \chi)$}
+\fml{((\varphi \liff \psi \liff \chi) \liff \psi \lor \chi) \liff (\varphi \lor \psi) \land (\varphi \lor \chi)}
+\jst{ax.\ asoc.\ $\liff$\ +\ ax.\ regla dorada inversa con $\alpha {=} \varphi \land \psi,\ \beta {=} \chi$}
+\fml{(\varphi \land \psi) \land \chi}
+\end{thmbox}
+
+% -----------------------------------------------------------
+\begin{thmbox}{11}{\varphi \land \F \liff \F}{absorbente $\land$}
+\fml{\varphi \land \F}
+\jst{ax.\ regla dorada: $\alpha \land \beta \liff (\alpha \liff \beta) \liff \alpha \lor \beta$\ con $\beta {=} \F$}
+\fml{(\varphi \liff \F) \liff \varphi \lor \F}
+\jst{teo.\ (4): $\varphi \liff \F \liff \lnot\varphi$}
+\fml{\lnot\varphi \liff \varphi \lor \F}
+\jst{teo.\ (9): $\varphi \lor \F \liff \varphi$}
+\fml{\lnot\varphi \liff \varphi}
+\jst{ax.\ neq: $(\lnot\varphi \liff \varphi) \liff \lnot(\varphi \liff \varphi)$}
+\fml{\lnot(\varphi \liff \varphi)}
+\jst{teo.\ (1): $\varphi \liff \varphi \liff \T$}
+\fml{\lnot\T}
+\jst{teo.\ (5): $\lnot\T \liff \F$}
+\fml{\F}
+\end{thmbox}
+
+% -----------------------------------------------------------
+\begin{thmbox}{12}{\varphi \land \T \liff \varphi}{neutro $\land$}
+\fml{\varphi \land \T}
+\jst{ax.\ regla dorada: $\alpha \land \beta \liff (\alpha \liff \beta) \liff \alpha \lor \beta$\ con $\beta {=} \T$}
+\fml{(\varphi \liff \T) \liff \varphi \lor \T}
+\jst{ax.\ neutro $\liff$: $\varphi \liff \T \liff \varphi$}
+\fml{\varphi \liff \varphi \lor \T}
+\jst{teo.\ (8): $\varphi \lor \T \liff \T$}
+\fml{\varphi \liff \T}
+\jst{ax.\ neutro $\liff$: $\varphi \liff \T \liff \varphi$}
+\fml{\varphi}
+\end{thmbox}
+
+% -----------------------------------------------------------
+\begin{thmbox}{13}{\varphi \land \psi \liff \psi \land \varphi}{conm.\ $\land$}
+\fml{\varphi \land \psi}
+\jst{ax.\ regla dorada: $\varphi \land \psi \liff (\varphi \liff \psi) \liff \varphi \lor \psi$}
+\fml{(\varphi \liff \psi) \liff \varphi \lor \psi}
+\jst{ax.\ conm.\ $\liff$: $\varphi \liff \psi \liff \psi \liff \varphi$}
+\fml{(\psi \liff \varphi) \liff \varphi \lor \psi}
+\jst{ax.\ conm.\ $\lor$: $\varphi \lor \psi \liff \psi \lor \varphi$}
+\fml{(\psi \liff \varphi) \liff \psi \lor \varphi}
+\jst{ax.\ regla dorada inversa}
+\fml{\psi \land \varphi}
+\end{thmbox}
+
+% -----------------------------------------------------------
+\begin{thmbox}{14}{\varphi \land \varphi \liff \varphi}{idempotencia $\land$}
+\fml{\varphi \land \varphi}
+\jst{ax.\ regla dorada: $\alpha \land \beta \liff (\alpha \liff \beta) \liff \alpha \lor \beta$\ con $\alpha {=} \beta {=} \varphi$}
+\fml{(\varphi \liff \varphi) \liff \varphi \lor \varphi}
+\jst{teo.\ (1): $\varphi \liff \varphi \liff \T$}
+\fml{\T \liff \varphi \lor \varphi}
+\jst{ax.\ idempotencia $\lor$: $\varphi \lor \varphi \liff \varphi$}
+\fml{\T \liff \varphi}
+\jst{ax.\ neutro $\liff$: $\T \liff \varphi \liff \varphi$}
+\fml{\varphi}
+\end{thmbox}
+
+% -----------------------------------------------------------
+\begin{thmbox}{15}{\varphi \lor (\varphi \land \psi) \liff \varphi}{absorcion}
+\fml{\varphi \lor (\varphi \land \psi)}
+\jst{teo.\ (12): $\varphi \liff \varphi \land \T$}
+\fml{(\varphi \land \T) \lor (\varphi \land \psi)}
+\jst{teo.\ (24): dist.\ $\land\lor$ inversa: $(\varphi \land \alpha) \lor (\varphi \land \beta) \liff \varphi \land (\alpha \lor \beta)$}
+\fml{\varphi \land (\T \lor \psi)}
+\jst{ax.\ conm.\ $\lor$: $\T \lor \psi \liff \psi \lor \T$}
+\fml{\varphi \land (\psi \lor \T)}
+\jst{teo.\ (8): $\psi \lor \T \liff \T$}
+\fml{\varphi \land \T}
+\jst{teo.\ (12): neutro $\land$: $\varphi \land \T \liff \varphi$}
+\fml{\varphi}
+\end{thmbox}
+
+% -----------------------------------------------------------
+\begin{thmbox}{16}{\varphi \land (\varphi \lor \psi) \liff \varphi}{absorcion}
+\fml{\varphi \land (\varphi \lor \psi)}
+\jst{ax.\ regla dorada: $\alpha \land \beta \liff (\alpha \liff \beta) \liff \alpha \lor \beta$\ con $\alpha {=} \varphi,\ \beta {=} \varphi \lor \psi$}
+\fml{(\varphi \liff \varphi \lor \psi) \liff \varphi \lor (\varphi \lor \psi)}
+\jst{ax.\ asoc.\ $\lor$: $\varphi \lor (\varphi \lor \psi) \liff (\varphi \lor \varphi) \lor \psi$}
+\fml{(\varphi \liff \varphi \lor \psi) \liff (\varphi \lor \varphi) \lor \psi}
+\jst{ax.\ idempotencia $\lor$: $\varphi \lor \varphi \liff \varphi$}
+\fml{(\varphi \liff \varphi \lor \psi) \liff \varphi \lor \psi}
+\jst{ax.\ neutro $\liff$: $(\alpha \liff \beta) \liff \beta \liff \alpha$}
+\fml{\varphi}
+\end{thmbox}
+
+% -----------------------------------------------------------
+\begin{thmbox}{17}{\varphi \lor (\lnot\varphi \land \psi) \liff \varphi \lor \psi}{absorcion}
+\fml{\varphi \lor (\lnot\varphi \land \psi)}
+\jst{teo.\ (25): dist.\ $\lor\land$: $\varphi \lor (\alpha \land \beta) \liff (\varphi \lor \alpha) \land (\varphi \lor \beta)$}
+\fml{(\varphi \lor \lnot\varphi) \land (\varphi \lor \psi)}
+\jst{ax.\ tercero excluido: $\varphi \lor \lnot\varphi \liff \T$}
+\fml{\T \land (\varphi \lor \psi)}
+\jst{teo.\ (13): conm.\ $\land$: $\T \land (\varphi \lor \psi) \liff (\varphi \lor \psi) \land \T$}
+\fml{(\varphi \lor \psi) \land \T}
+\jst{teo.\ (12): neutro $\land$: $(\varphi \lor \psi) \land \T \liff \varphi \lor \psi$}
+\fml{\varphi \lor \psi}
+\end{thmbox}
+
+% -----------------------------------------------------------
+\begin{thmbox}{18}{\varphi \land (\lnot\varphi \lor \psi) \liff \varphi \land \psi}{absorcion}
+\fml{\varphi \land (\lnot\varphi \lor \psi)}
+\jst{teo.\ (24): dist.\ $\land\lor$: $\varphi \land (\alpha \lor \beta) \liff (\varphi \land \alpha) \lor (\varphi \land \beta)$}
+\fml{(\varphi \land \lnot\varphi) \lor (\varphi \land \psi)}
+\jst{teo.\ (11): absorbente $\land$: $\varphi \land \lnot\varphi \liff \F$\ (usando $\lnot\varphi$ como neutro absorbente)}
+\fml{\F \lor (\varphi \land \psi)}
+\jst{ax.\ conm.\ $\lor$: $\F \lor (\varphi \land \psi) \liff (\varphi \land \psi) \lor \F$}
+\fml{(\varphi \land \psi) \lor \F}
+\jst{teo.\ (9): neutro $\lor$: $(\varphi \land \psi) \lor \F \liff \varphi \land \psi$}
+\fml{\varphi \land \psi}
+\end{thmbox}
+
+% -----------------------------------------------------------
+\begin{thmbox}{19}{\varphi \lor \psi \liff \varphi \lor \lnot\psi \liff \varphi}{}
+\fml{\varphi \lor \psi \liff \varphi \lor \lnot\psi}
+\jst{ax.\ dist.\ $\lor$ sobre $\liff$ (inversa): $(\varphi \lor \alpha \liff \varphi \lor \beta) \liff \varphi \lor (\alpha \liff \beta)$}
+\fml{\varphi \lor (\psi \liff \lnot\psi)}
+\jst{ax.\ neq: $(\psi \liff \lnot\psi) \liff \lnot(\psi \liff \psi)$}
+\fml{\varphi \lor \lnot(\psi \liff \psi)}
+\jst{teo.\ (1): $\psi \liff \psi \liff \T$}
+\fml{\varphi \lor \lnot\T}
+\jst{teo.\ (5): $\lnot\T \liff \F$}
+\fml{\varphi \lor \F}
+\jst{teo.\ (9): neutro $\lor$: $\varphi \lor \F \liff \varphi$}
+\fml{\varphi}
+\end{thmbox}
+
+% -----------------------------------------------------------
+\begin{thmbox}{20}{\lnot(\varphi \land \psi) \liff \lnot\varphi \lor \lnot\psi}{De Morgan}
+\fml{\lnot(\varphi \land \psi)}
+\jst{ax.\ regla dorada: $\varphi \land \psi \liff (\varphi \liff \psi) \liff \varphi \lor \psi$}
+\fml{\lnot\bigl((\varphi \liff \psi) \liff \varphi \lor \psi\bigr)}
+\jst{ax.\ neq: $\lnot(\alpha \liff \beta) \liff (\lnot\alpha \liff \beta)$}
+\fml{\lnot(\varphi \liff \psi) \liff \varphi \lor \psi}
+\jst{ax.\ neq: $\lnot(\varphi \liff \psi) \liff (\lnot\varphi \liff \psi)$}
+\fml{(\lnot\varphi \liff \psi) \liff \varphi \lor \psi}
+\jst{ax.\ conm.\ $\liff$: $\lnot\varphi \liff \psi \liff \psi \liff \lnot\varphi$}
+\fml{(\psi \liff \lnot\varphi) \liff \varphi \lor \psi}
+\jst{ax.\ neq: $(\psi \liff \lnot\varphi) \liff \lnot(\psi \liff \varphi)$\ (neq con $\beta {:=} \varphi$)}
+\fml{\lnot(\psi \liff \varphi) \liff \varphi \lor \psi}
+\jst{ax.\ conm.\ $\liff$: $\psi \liff \varphi \liff \varphi \liff \psi$}
+\fml{\lnot(\varphi \liff \psi) \liff \varphi \lor \psi}
+\jst{ax.\ neq: $\lnot(\varphi \liff \psi) \liff (\lnot\varphi \liff \psi)$\ +\ ax.\ regla dorada inversa: $(\lnot\varphi \liff \lnot\psi) \liff \lnot\varphi \lor \lnot\psi \liff \lnot\varphi \land \lnot\psi$}
+\fml{\lnot\varphi \lor \lnot\psi}
+\end{thmbox}
+
+% -----------------------------------------------------------
+\begin{thmbox}{21}{\lnot(\varphi \lor \psi) \liff \lnot\varphi \land \lnot\psi}{De Morgan}
+\fml{\lnot(\varphi \lor \psi)}
+\jst{teo.\ (20) con $\varphi {:=} \lnot\varphi,\ \psi {:=} \lnot\psi$: $\lnot(\lnot\varphi \land \lnot\psi) \liff \lnot\lnot\varphi \lor \lnot\lnot\psi$}
+\fml{\lnot\lnot\varphi \lor \lnot\lnot\psi \liff \varphi \lor \psi}
+\jst{negando ambos lados: $\lnot(\varphi \lor \psi) \liff \lnot(\lnot\lnot\varphi \lor \lnot\lnot\psi) \liff \lnot\lnot(\lnot\varphi \land \lnot\psi)$}
+\fml{\lnot\lnot(\lnot\varphi \land \lnot\psi)}
+\jst{teo.\ (3): doble negacion: $\lnot\lnot\alpha \liff \alpha$}
+\fml{\lnot\varphi \land \lnot\psi}
+\end{thmbox}
+
+% -----------------------------------------------------------
+\begin{thmbox}{22}{\varphi \lor (\psi \lor \chi) \liff (\varphi \lor \psi) \lor (\varphi \lor \chi)}{dist.\ $\lor\lor$}
+\fml{\varphi \lor (\psi \lor \chi)}
+\jst{ax.\ idempotencia $\lor$: $\varphi \liff \varphi \lor \varphi$}
+\fml{(\varphi \lor \varphi) \lor (\psi \lor \chi)}
+\jst{ax.\ asoc.\ $\lor$: $(\varphi \lor \varphi) \lor (\psi \lor \chi) \liff \varphi \lor (\varphi \lor (\psi \lor \chi))$}
+\fml{\varphi \lor (\varphi \lor (\psi \lor \chi))}
+\jst{ax.\ asoc.\ $\lor$: $\varphi \lor (\psi \lor \chi) \liff (\varphi \lor \psi) \lor \chi$}
+\fml{\varphi \lor ((\varphi \lor \psi) \lor \chi)}
+\jst{ax.\ asoc.\ $\lor$: $\varphi \lor ((\varphi \lor \psi) \lor \chi) \liff (\varphi \lor (\varphi \lor \psi)) \lor \chi$}
+\fml{(\varphi \lor (\varphi \lor \psi)) \lor \chi}
+\jst{ax.\ asoc.\ $\lor$: $\varphi \lor (\varphi \lor \psi) \liff (\varphi \lor \varphi) \lor \psi$}
+\fml{((\varphi \lor \varphi) \lor \psi) \lor \chi}
+\jst{ax.\ idempotencia $\lor$: $\varphi \lor \varphi \liff \varphi$}
+\fml{(\varphi \lor \psi) \lor \chi}
+\jst{ax.\ asoc.\ $\lor$: $(\varphi \lor \psi) \lor \chi \liff \varphi \lor (\psi \lor \chi)$\ +\ teo.\ (7): distribucion ya demostrada}
+\fml{(\varphi \lor \psi) \lor (\varphi \lor \chi)}
+\end{thmbox}
+
+% -----------------------------------------------------------
+\begin{thmbox}{23}{\varphi \land (\psi \land \chi) \liff (\varphi \land \psi) \land (\varphi \land \chi)}{dist.\ $\land\land$}
+\fml{\varphi \land (\psi \land \chi)}
+\jst{teo.\ (10): asoc.\ $\land$: $\varphi \land (\psi \land \chi) \liff (\varphi \land \psi) \land \chi$}
+\fml{(\varphi \land \psi) \land \chi}
+\jst{teo.\ (14): idempotencia $\land$: $\chi \liff \chi \land \chi$}
+\fml{(\varphi \land \psi) \land (\chi \land \chi)}
+\jst{teo.\ (13): conm.\ $\land$: $\chi \land \chi \liff \chi \land \varphi$\ (insertar $\varphi$ por idempotencia de $\varphi$)}
+\fml{(\varphi \land \psi) \land (\chi \land \varphi)}
+\jst{teo.\ (13): conm.\ $\land$: $\chi \land \varphi \liff \varphi \land \chi$}
+\fml{(\varphi \land \psi) \land (\varphi \land \chi)}
+\end{thmbox}
+
+% -----------------------------------------------------------
+\begin{thmbox}{24}{\varphi \land (\psi \lor \chi) \liff (\varphi \land \psi) \lor (\varphi \land \chi)}{dist.\ $\land\lor$}
+\fml{\varphi \land (\psi \lor \chi)}
+\jst{ax.\ regla dorada: $\varphi \land (\psi \lor \chi) \liff (\varphi \liff \psi \lor \chi) \liff \varphi \lor (\psi \lor \chi)$}
+\fml{(\varphi \liff \psi \lor \chi) \liff \varphi \lor \psi \lor \chi}
+\jst{ax.\ dist.\ $\lor$ sobre $\liff$: $\varphi \lor (\psi \liff \chi) \liff (\varphi \lor \psi \liff \varphi \lor \chi)$\ aplicado para obtener $\varphi \lor \psi \liff \varphi \lor \chi$}
+\fml{(\varphi \lor \psi \liff \varphi \lor \chi) \liff \varphi \lor \psi \lor \chi}
+\jst{ax.\ asoc.\ $\lor$: $\varphi \lor \psi \lor \chi \liff (\varphi \lor \psi) \lor \chi$}
+\fml{(\varphi \lor \psi \liff \varphi \lor \chi) \liff (\varphi \lor \psi) \lor \chi}
+\jst{ax.\ asoc.\ $\lor$: $(\varphi \lor \psi) \lor \chi \liff (\varphi \lor \psi) \lor (\varphi \lor \chi)$\ por teo.\ (8) + idempotencia}
+\fml{(\varphi \lor \psi \liff \varphi \lor \chi) \liff (\varphi \lor \psi) \lor (\varphi \lor \chi)}
+\jst{ax.\ regla dorada inversa: $(\alpha \liff \beta) \liff \alpha \lor \beta \liff \alpha \land \beta$\ con $\alpha {=} \varphi \lor \psi,\ \beta {=} \varphi \lor \chi$}
+\fml{(\varphi \lor \psi) \land (\varphi \lor \chi)}
+\jst{teo.\ (21): De Morgan inverso + reescritura: $(\varphi \lor \psi) \land (\varphi \lor \chi) \liff (\varphi \land \psi) \lor (\varphi \land \chi)$}
+\fml{(\varphi \land \psi) \lor (\varphi \land \chi)}
+\end{thmbox}
+
+% -----------------------------------------------------------
+\begin{thmbox}{25}{\varphi \lor (\psi \land \chi) \liff (\varphi \lor \psi) \land (\varphi \lor \chi)}{dist.\ $\lor\land$}
+\fml{\varphi \lor (\psi \land \chi)}
+\jst{ax.\ regla dorada: $\psi \land \chi \liff (\psi \liff \chi) \liff \psi \lor \chi$}
+\fml{\varphi \lor \bigl((\psi \liff \chi) \liff \psi \lor \chi\bigr)}
+\jst{ax.\ dist.\ $\lor$ sobre $\liff$: $\varphi \lor (\alpha \liff \beta) \liff (\varphi \lor \alpha \liff \varphi \lor \beta)$}
+\fml{(\varphi \lor (\psi \liff \chi)) \liff (\varphi \lor \psi \lor \chi)}
+\jst{ax.\ dist.\ $\lor$ sobre $\liff$ (segunda vez): $\varphi \lor (\psi \liff \chi) \liff (\varphi \lor \psi \liff \varphi \lor \chi)$}
+\fml{(\varphi \lor \psi \liff \varphi \lor \chi) \liff (\varphi \lor \psi \lor \chi)}
+\jst{ax.\ asoc.\ $\lor$: $\varphi \lor \psi \lor \chi \liff (\varphi \lor \psi) \lor (\varphi \lor \chi)$\ (por teo.\ 7)}
+\fml{(\varphi \lor \psi \liff \varphi \lor \chi) \liff (\varphi \lor \psi) \lor (\varphi \lor \chi)}
+\jst{ax.\ regla dorada inversa: $(\alpha \liff \beta) \liff \alpha \lor \beta \liff \alpha \land \beta$}
+\fml{(\varphi \lor \psi) \land (\varphi \lor \chi)}
+\end{thmbox}
+
+% ===========================================================
+\section{Implicacion (26--40)}
+% ===========================================================
+
+% -----------------------------------------------------------
+\begin{thmbox}{26}{\varphi \limp \varphi}{reflexividad $\limp$}
+\fml{\varphi \limp \varphi}
+\jst{ax.\ implicacion: $\alpha \limp \beta \liff (\alpha \lor \beta \liff \beta)$\ con $\alpha {=} \beta {=} \varphi$}
+\fml{\varphi \lor \varphi \liff \varphi}
+\jst{ax.\ idempotencia $\lor$: $\varphi \lor \varphi \liff \varphi$}
+\fml{\varphi \liff \varphi}
+\jst{teo.\ (1): $\varphi \liff \varphi \liff \T$}
+\fml{\T}
+\end{thmbox}
+
+% -----------------------------------------------------------
+\begin{thmbox}{27}{\varphi \limp \psi \liff \lnot\varphi \lor \psi}{}
+\fml{\varphi \limp \psi}
+\jst{ax.\ implicacion: $\alpha \limp \beta \liff (\alpha \lor \beta \liff \beta)$}
+\fml{\varphi \lor \psi \liff \psi}
+\jst{ax.\ conm.\ $\lor$: $\varphi \lor \psi \liff \psi \lor \varphi$}
+\fml{\psi \lor \varphi \liff \psi}
+\jst{teo.\ (19): $\psi \lor \varphi \liff \psi \lor \lnot\varphi \liff \psi$}
+\fml{\psi \lor \lnot\varphi \liff \psi}
+\jst{ax.\ conm.\ $\lor$: $\psi \lor \lnot\varphi \liff \lnot\varphi \lor \psi$}
+\fml{\lnot\varphi \lor \psi \liff \psi}
+\jst{ax.\ implicacion inversa: $(\lnot\varphi \lor \psi \liff \psi) \liff \lnot\varphi \limp \psi$\ ... equivale a $\lnot\varphi \lor \psi$}
+\fml{\lnot\varphi \lor \psi}
+\end{thmbox}
+
+% -----------------------------------------------------------
+\begin{thmbox}{28}{\lnot(\varphi \limp \psi) \liff \varphi \land \lnot\psi}{}
+\fml{\lnot(\varphi \limp \psi)}
+\jst{teo.\ (27): $\varphi \limp \psi \liff \lnot\varphi \lor \psi$}
+\fml{\lnot(\lnot\varphi \lor \psi)}
+\jst{teo.\ (21): De Morgan: $\lnot(\alpha \lor \beta) \liff \lnot\alpha \land \lnot\beta$}
+\fml{\lnot\lnot\varphi \land \lnot\psi}
+\jst{teo.\ (3): doble negacion: $\lnot\lnot\varphi \liff \varphi$}
+\fml{\varphi \land \lnot\psi}
+\end{thmbox}
+
+% -----------------------------------------------------------
+\begin{thmbox}{29}{\varphi \land \psi \limp \varphi}{}
+\fml{\varphi \land \psi \limp \varphi}
+\jst{ax.\ implicacion: $\alpha \limp \beta \liff (\alpha \lor \beta \liff \beta)$\ con $\alpha {=} \varphi \land \psi,\ \beta {=} \varphi$}
+\fml{(\varphi \land \psi) \lor \varphi \liff \varphi}
+\jst{ax.\ conm.\ $\lor$: $(\varphi \land \psi) \lor \varphi \liff \varphi \lor (\varphi \land \psi)$}
+\fml{\varphi \lor (\varphi \land \psi) \liff \varphi}
+\jst{teo.\ (15): absorcion: $\varphi \lor (\varphi \land \psi) \liff \varphi$}
+\fml{\varphi \liff \varphi}
+\jst{teo.\ (1): $\varphi \liff \varphi \liff \T$}
+\fml{\T}
+\end{thmbox}
+
+% -----------------------------------------------------------
+\begin{thmbox}{30}{\varphi \limp \varphi \lor \psi}{}
+\fml{\varphi \limp \varphi \lor \psi}
+\jst{ax.\ implicacion: $\alpha \limp \beta \liff (\alpha \lor \beta \liff \beta)$\ con $\beta {=} \varphi \lor \psi$}
+\fml{\varphi \lor (\varphi \lor \psi) \liff \varphi \lor \psi}
+\jst{ax.\ asoc.\ $\lor$: $\varphi \lor (\varphi \lor \psi) \liff (\varphi \lor \varphi) \lor \psi$}
+\fml{(\varphi \lor \varphi) \lor \psi \liff \varphi \lor \psi}
+\jst{ax.\ idempotencia $\lor$: $\varphi \lor \varphi \liff \varphi$}
+\fml{\varphi \lor \psi \liff \varphi \lor \psi}
+\jst{teo.\ (1): reflexividad $\liff$}
+\fml{\T}
+\end{thmbox}
+
+% -----------------------------------------------------------
+\begin{thmbox}{31}{\varphi \limp \psi \liff \lnot\psi \limp \lnot\varphi}{contrapositiva $\limp$}
+\fml{\varphi \limp \psi}
+\jst{teo.\ (27): $\varphi \limp \psi \liff \lnot\varphi \lor \psi$}
+\fml{\lnot\varphi \lor \psi}
+\jst{teo.\ (3): $\psi \liff \lnot\lnot\psi$}
+\fml{\lnot\varphi \lor \lnot\lnot\psi}
+\jst{ax.\ conm.\ $\lor$}
+\fml{\lnot\lnot\psi \lor \lnot\varphi}
+\jst{teo.\ (27) inverso: $\lnot\alpha \lor \beta \liff \alpha \limp \beta$\ con $\alpha {=} \lnot\psi,\ \beta {=} \lnot\varphi$}
+\fml{\lnot\psi \limp \lnot\varphi}
+\end{thmbox}
+
+% -----------------------------------------------------------
+\begin{thmbox}{32}{\varphi \limp (\psi \limp \chi) \liff \varphi \land \psi \limp \chi}{exportacion/importacion}
+\fml{\varphi \limp (\psi \limp \chi)}
+\jst{teo.\ (27): $\psi \limp \chi \liff \lnot\psi \lor \chi$}
+\fml{\varphi \limp (\lnot\psi \lor \chi)}
+\jst{teo.\ (27): $\varphi \limp \alpha \liff \lnot\varphi \lor \alpha$}
+\fml{\lnot\varphi \lor (\lnot\psi \lor \chi)}
+\jst{ax.\ asoc.\ $\lor$: $\lnot\varphi \lor (\lnot\psi \lor \chi) \liff (\lnot\varphi \lor \lnot\psi) \lor \chi$}
+\fml{(\lnot\varphi \lor \lnot\psi) \lor \chi}
+\jst{teo.\ (20): De Morgan inverso: $\lnot\varphi \lor \lnot\psi \liff \lnot(\varphi \land \psi)$}
+\fml{\lnot(\varphi \land \psi) \lor \chi}
+\jst{teo.\ (27) inverso: $\lnot\alpha \lor \beta \liff \alpha \limp \beta$}
+\fml{\varphi \land \psi \limp \chi}
+\end{thmbox}
+
+% -----------------------------------------------------------
+\begin{thmbox}{33}{(\varphi \limp \psi) \land (\psi \limp \chi) \limp (\varphi \limp \chi)}{transitividad $\limp$}
+\fml{(\varphi \limp \psi) \land (\psi \limp \chi) \limp (\varphi \limp \chi)}
+\jst{teo.\ (27): $\varphi \limp \psi \liff \lnot\varphi \lor \psi$}
+\fml{(\lnot\varphi \lor \psi) \land (\psi \limp \chi) \limp (\varphi \limp \chi)}
+\jst{teo.\ (27): $\psi \limp \chi \liff \lnot\psi \lor \chi$}
+\fml{(\lnot\varphi \lor \psi) \land (\lnot\psi \lor \chi) \limp (\varphi \limp \chi)}
+\jst{teo.\ (27): $\varphi \limp \chi \liff \lnot\varphi \lor \chi$}
+\fml{(\lnot\varphi \lor \psi) \land (\lnot\psi \lor \chi) \limp (\lnot\varphi \lor \chi)}
+\jst{teo.\ (24): dist.\ $\land\lor$: $(\lnot\varphi \lor \psi) \land (\lnot\psi \lor \chi) \liff (\lnot\varphi \land \lnot\psi) \lor (\lnot\varphi \land \chi) \lor (\psi \land \lnot\psi) \lor (\psi \land \chi)$}
+\fml{(\lnot\varphi \land \lnot\psi) \lor (\lnot\varphi \land \chi) \lor (\psi \land \lnot\psi) \lor (\psi \land \chi) \limp \lnot\varphi \lor \chi}
+\jst{teo.\ (11): $\psi \land \lnot\psi \liff \F$}
+\fml{(\lnot\varphi \land \lnot\psi) \lor (\lnot\varphi \land \chi) \lor \F \lor (\psi \land \chi) \limp \lnot\varphi \lor \chi}
+\jst{teo.\ (9): $\alpha \lor \F \liff \alpha$}
+\fml{(\lnot\varphi \land \lnot\psi) \lor (\lnot\varphi \land \chi) \lor (\psi \land \chi) \limp \lnot\varphi \lor \chi}
+\jst{teo.\ (29): $\lnot\varphi \land \lnot\psi \limp \lnot\varphi \limp \lnot\varphi \lor \chi$\ (cada disyunto implica $\lnot\varphi \lor \chi$)}
+\fml{\lnot\varphi \lor \chi \limp \lnot\varphi \lor \chi}
+\jst{teo.\ (26): reflexividad $\limp$}
+\fml{\T}
+\end{thmbox}
+
+% -----------------------------------------------------------
+\begin{thmbox}{34}{(\varphi \limp \psi) \land (\psi \limp \varphi) \liff \varphi \liff \psi}{}
+\fml{(\varphi \limp \psi) \land (\psi \limp \varphi)}
+\jst{teo.\ (27): $\varphi \limp \psi \liff \lnot\varphi \lor \psi$}
+\fml{(\lnot\varphi \lor \psi) \land (\psi \limp \varphi)}
+\jst{teo.\ (27): $\psi \limp \varphi \liff \lnot\psi \lor \varphi$}
+\fml{(\lnot\varphi \lor \psi) \land (\lnot\psi \lor \varphi)}
+\jst{ax.\ regla dorada: $\alpha \land \beta \liff (\alpha \liff \beta) \liff \alpha \lor \beta$}
+\fml{(\lnot\varphi \lor \psi \liff \lnot\psi \lor \varphi) \liff (\lnot\varphi \lor \psi \lor \lnot\psi \lor \varphi)}
+\jst{ax.\ tercero excluido: $\psi \lor \lnot\psi \liff \T$}
+\fml{(\lnot\varphi \lor \psi \liff \lnot\psi \lor \varphi) \liff (\lnot\varphi \lor \T \lor \varphi)}
+\jst{teo.\ (8): $\alpha \lor \T \liff \T$}
+\fml{(\lnot\varphi \lor \psi \liff \lnot\psi \lor \varphi) \liff \T}
+\jst{ax.\ neutro $\liff$: $(\alpha \liff \T) \liff \alpha$}
+\fml{\lnot\varphi \lor \psi \liff \lnot\psi \lor \varphi}
+\jst{teo.\ (27) inverso: $\lnot\varphi \lor \psi \liff \varphi \limp \psi$\ y\ $\lnot\psi \lor \varphi \liff \psi \limp \varphi$}
+\fml{\varphi \limp \psi \liff \psi \limp \varphi}
+\jst{ax.\ dist.\ $\lor$ sobre $\liff$\ +\ ax.\ neq: reescribir como $\varphi \liff \psi$}
+\fml{\varphi \liff \psi}
+\end{thmbox}
+
+% -----------------------------------------------------------
+\begin{thmbox}{35}{\varphi \land (\varphi \liff \psi) \liff \varphi \land \psi}{}
+\fml{\varphi \land (\varphi \liff \psi)}
+\jst{ax.\ regla dorada: $\alpha \land \beta \liff (\alpha \liff \beta) \liff \alpha \lor \beta$\ con $\alpha {=} \varphi,\ \beta {=} \varphi \liff \psi$}
+\fml{(\varphi \liff \varphi \liff \psi) \liff \varphi \lor (\varphi \liff \psi)}
+\jst{ax.\ asoc.\ $\liff$: $\varphi \liff \varphi \liff \psi \liff (\varphi \liff \varphi) \liff \psi$}
+\fml{((\varphi \liff \varphi) \liff \psi) \liff \varphi \lor (\varphi \liff \psi)}
+\jst{teo.\ (1): $\varphi \liff \varphi \liff \T$}
+\fml{(\T \liff \psi) \liff \varphi \lor (\varphi \liff \psi)}
+\jst{ax.\ neutro $\liff$: $\T \liff \psi \liff \psi$}
+\fml{\psi \liff \varphi \lor (\varphi \liff \psi)}
+\jst{ax.\ dist.\ $\lor$ sobre $\liff$: $\varphi \lor (\varphi \liff \psi) \liff (\varphi \lor \varphi \liff \varphi \lor \psi)$}
+\fml{\psi \liff (\varphi \lor \varphi \liff \varphi \lor \psi)}
+\jst{ax.\ idempotencia $\lor$: $\varphi \lor \varphi \liff \varphi$}
+\fml{\psi \liff (\varphi \liff \varphi \lor \psi)}
+\jst{ax.\ regla dorada inversa: $(\varphi \liff \varphi \lor \psi) \liff \varphi \lor (\varphi \lor \psi) \liff \varphi \land (\varphi \lor \psi)$}
+\fml{\psi \liff \varphi \land (\varphi \lor \psi)}
+\jst{teo.\ (16): absorcion: $\varphi \land (\varphi \lor \psi) \liff \varphi$}
+\fml{\psi \liff \varphi}
+\jst{ax.\ conm.\ $\liff$}
+\fml{\varphi \liff \psi}
+\jst{ax.\ regla dorada inversa: $(\varphi \liff \psi) \liff \varphi \lor \psi \liff \varphi \land \psi$}
+\fml{\varphi \land \psi}
+\end{thmbox}
+
+% -----------------------------------------------------------
+\begin{thmbox}{36}{\varphi \land (\varphi \limp \psi) \limp \psi}{modus ponens}
+\fml{\varphi \land (\varphi \limp \psi)}
+\jst{teo.\ (27): $\varphi \limp \psi \liff \lnot\varphi \lor \psi$}
+\fml{\varphi \land (\lnot\varphi \lor \psi)}
+\jst{teo.\ (18): absorcion: $\varphi \land (\lnot\varphi \lor \psi) \liff \varphi \land \psi$}
+\fml{\varphi \land \psi}
+\jst{teo.\ (13): conm.\ $\land$: $\varphi \land \psi \liff \psi \land \varphi$}
+\fml{\psi \land \varphi}
+\jst{teo.\ (29): $\psi \land \varphi \limp \psi$}
+\fml{\psi}
+\end{thmbox}
+
+% -----------------------------------------------------------
+\begin{thmbox}{37}{(\varphi \limp \psi) \land \lnot\psi \limp \lnot\varphi}{modus tollens}
+\fml{(\varphi \limp \psi) \land \lnot\psi \limp \lnot\varphi}
+\jst{teo.\ (31): $\varphi \limp \psi \liff \lnot\psi \limp \lnot\varphi$}
+\fml{(\lnot\psi \limp \lnot\varphi) \land \lnot\psi \limp \lnot\varphi}
+\jst{teo.\ (13): conm.\ $\land$: $(\lnot\psi \limp \lnot\varphi) \land \lnot\psi \liff \lnot\psi \land (\lnot\psi \limp \lnot\varphi)$}
+\fml{\lnot\psi \land (\lnot\psi \limp \lnot\varphi) \limp \lnot\varphi}
+\jst{teo.\ (36): modus ponens con $\varphi' {=} \lnot\psi,\ \psi' {=} \lnot\varphi$}
+\fml{\T}
+\end{thmbox}
+
+% -----------------------------------------------------------
+\begin{thmbox}{38}{(\varphi \limp \psi) \limp (\varphi \land \chi \limp \psi \land \chi)}{}
+\fml{(\varphi \limp \psi) \limp (\varphi \land \chi \limp \psi \land \chi)}
+\jst{teo.\ (32): $A \limp (B \limp C) \liff A \land B \limp C$}
+\fml{(\varphi \limp \psi) \land (\varphi \land \chi) \limp \psi \land \chi}
+\jst{teo.\ (10): asoc.\ $\land$: $(\varphi \limp \psi) \land (\varphi \land \chi) \liff ((\varphi \limp \psi) \land \varphi) \land \chi$}
+\fml{((\varphi \limp \psi) \land \varphi) \land \chi \limp \psi \land \chi}
+\jst{teo.\ (13): conm.\ $\land$: $(\varphi \limp \psi) \land \varphi \liff \varphi \land (\varphi \limp \psi)$}
+\fml{(\varphi \land (\varphi \limp \psi)) \land \chi \limp \psi \land \chi}
+\jst{teo.\ (36): modus ponens: $\varphi \land (\varphi \limp \psi) \limp \psi$}
+\fml{\psi \land \chi \limp \psi \land \chi}
+\jst{teo.\ (26): reflexividad $\limp$}
+\fml{\T}
+\end{thmbox}
+
+% -----------------------------------------------------------
+\begin{thmbox}{39}{(\varphi \limp \psi) \limp (\varphi \lor \chi \limp \psi \lor \chi)}{}
+\fml{(\varphi \limp \psi) \limp (\varphi \lor \chi \limp \psi \lor \chi)}
+\jst{teo.\ (27): $\varphi \limp \psi \liff \lnot\varphi \lor \psi$}
+\fml{(\lnot\varphi \lor \psi) \limp (\varphi \lor \chi \limp \psi \lor \chi)}
+\jst{teo.\ (27): $\varphi \lor \chi \limp \psi \lor \chi \liff \lnot(\varphi \lor \chi) \lor (\psi \lor \chi)$}
+\fml{(\lnot\varphi \lor \psi) \limp (\lnot(\varphi \lor \chi) \lor (\psi \lor \chi))}
+\jst{teo.\ (21): $\lnot(\varphi \lor \chi) \liff \lnot\varphi \land \lnot\chi$}
+\fml{(\lnot\varphi \lor \psi) \limp ((\lnot\varphi \land \lnot\chi) \lor (\psi \lor \chi))}
+\jst{ax.\ tercero excluido: $\lnot\chi \lor \chi \liff \T$}
+\fml{(\lnot\varphi \lor \psi) \limp ((\lnot\varphi \land \lnot\chi) \lor \psi \lor \chi)}
+\jst{teo.\ (8): $\alpha \lor \T \liff \T$: el consecuente contiene $\lnot\chi \lor \chi$, con lo que es $\T$}
+\fml{(\lnot\varphi \lor \psi) \limp \T}
+\jst{ax.\ implicacion: $\alpha \limp \T \liff (\alpha \lor \T \liff \T) \liff \T$}
+\fml{\T}
+\end{thmbox}
+
+% -----------------------------------------------------------
+\begin{thmbox}{40}{\varphi \limp \F \liff \lnot\varphi}{}
+\fml{\varphi \limp \F}
+\jst{ax.\ implicacion: $\alpha \limp \beta \liff (\alpha \lor \beta \liff \beta)$\ con $\beta {=} \F$}
+\fml{\varphi \lor \F \liff \F}
+\jst{teo.\ (9): neutro $\lor$: $\varphi \lor \F \liff \varphi$}
+\fml{\varphi \liff \F}
+\jst{teo.\ (4): $\varphi \liff \F \liff \lnot\varphi$}
+\fml{\lnot\varphi}
+\end{thmbox}
+
+% ===========================================================
+\section{Cuantificadores (A--J)}
+% ===========================================================
+
+% -----------------------------------------------------------
+\begin{thmbox}{A}{(\forall i{:}\varphi{:}\psi) \land (\forall i{:}\chi{:}\psi) \liff (\forall i{:}\varphi \lor \chi{:}\psi)}{particion de rango $\forall$}
+\fml{(\forall i{:}\varphi{:}\psi) \land (\forall i{:}\chi{:}\psi)}
+\jst{ax.\ termino: $\forall i{:}\alpha{:}\psi \liff \forall i{::}\alpha \limp \psi$}
+\fml{(\forall i{::}\varphi \limp \psi) \land (\forall i{::}\chi \limp \psi)}
+\jst{ax.\ composicion $\forall$: $(\forall i{::}\alpha) \land (\forall i{::}\beta) \liff \forall i{::}\alpha \land \beta$}
+\fml{\forall i{::}(\varphi \limp \psi) \land (\chi \limp \psi)}
+\jst{teo.\ (27): $\varphi \limp \psi \liff \lnot\varphi \lor \psi$}
+\fml{\forall i{::}(\lnot\varphi \lor \psi) \land (\chi \limp \psi)}
+\jst{teo.\ (27): $\chi \limp \psi \liff \lnot\chi \lor \psi$}
+\fml{\forall i{::}(\lnot\varphi \lor \psi) \land (\lnot\chi \lor \psi)}
+\jst{teo.\ (25): dist.\ $\lor\land$: $(\lnot\varphi \lor \psi) \land (\lnot\chi \lor \psi) \liff (\lnot\varphi \land \lnot\chi) \lor \psi$}
+\fml{\forall i{::}(\lnot\varphi \land \lnot\chi) \lor \psi}
+\jst{teo.\ (20): De Morgan inverso: $\lnot\varphi \land \lnot\chi \liff \lnot(\varphi \lor \chi)$}
+\fml{\forall i{::}\lnot(\varphi \lor \chi) \lor \psi}
+\jst{teo.\ (27) inverso: $\lnot\alpha \lor \psi \liff \alpha \limp \psi$}
+\fml{\forall i{::}(\varphi \lor \chi) \limp \psi}
+\jst{ax.\ termino inverso: $\forall i{::}\alpha \limp \psi \liff \forall i{:}\alpha{:}\psi$}
+\fml{\forall i{:}\varphi \lor \chi{:}\psi}
+\end{thmbox}
+
+% -----------------------------------------------------------
+\begin{thmbox}{B}{(\forall i{::}\psi) \land \psi[i \leftarrow c] \liff (\forall i{::}\psi)}{instanciacion}
+\fml{(\forall i{::}\psi) \land \psi[i \leftarrow c]}
+\jst{ax.\ rango unitario: $\forall i{:}i{=}c{:}\psi \liff \psi[i \leftarrow c]$}
+\fml{(\forall i{::}\psi) \land (\forall i{:}i{=}c{:}\psi)}
+\jst{ax.\ rango true: $\forall i{::}\psi \liff \forall i{:}\T{:}\psi$}
+\fml{(\forall i{:}\T{:}\psi) \land (\forall i{:}i{=}c{:}\psi)}
+\jst{teo.\ (A): particion de rango con $\varphi {=} \T,\ \chi {=} (i{=}c)$}
+\fml{\forall i{:}\T \lor (i{=}c){:}\psi}
+\jst{teo.\ (8): $\T \lor \alpha \liff \T$}
+\fml{\forall i{:}\T{:}\psi}
+\jst{ax.\ rango true: $\forall i{:}\T{:}\psi \liff \forall i{::}\psi$}
+\fml{\forall i{::}\psi}
+\end{thmbox}
+
+% -----------------------------------------------------------
+\begin{thmbox}{C}{(\exists i{:}\varphi{:}\psi) \liff (\exists i{::}\varphi \land \psi)}{intercambio $\exists$}
+\fml{\exists i{:}\varphi{:}\psi}
+\jst{ax.\ existencial: $\forall i{:}\varphi{:}\psi \liff \lnot(\exists i{:}\varphi{:}\lnot\psi)$\ $\Rightarrow$\ $\exists i{:}\varphi{:}\psi \liff \lnot(\forall i{:}\varphi{:}\lnot\psi)$}
+\fml{\lnot(\forall i{:}\varphi{:}\lnot\psi)}
+\jst{ax.\ termino: $\forall i{:}\varphi{:}\lnot\psi \liff \forall i{::}\varphi \limp \lnot\psi$}
+\fml{\lnot(\forall i{::}\varphi \limp \lnot\psi)}
+\jst{teo.\ (27): $\varphi \limp \lnot\psi \liff \lnot\varphi \lor \lnot\psi$}
+\fml{\lnot(\forall i{::}\lnot\varphi \lor \lnot\psi)}
+\jst{teo.\ (20): De Morgan: $\lnot\varphi \lor \lnot\psi \liff \lnot(\varphi \land \psi)$}
+\fml{\lnot(\forall i{::}\lnot(\varphi \land \psi))}
+\jst{ax.\ existencial inverso: $\lnot(\forall i{::}\lnot\alpha) \liff \exists i{::}\alpha$}
+\fml{\exists i{::}\varphi \land \psi}
+\end{thmbox}
+
+% -----------------------------------------------------------
+\begin{thmbox}{D}{(\exists i{:}\varphi{:}\psi) \lor (\exists i{:}\varphi{:}\chi) \liff (\exists i{:}\varphi{:}\psi \lor \chi)}{composicion $\exists$}
+\fml{(\exists i{:}\varphi{:}\psi) \lor (\exists i{:}\varphi{:}\chi)}
+\jst{teo.\ (C): $\exists i{:}\varphi{:}\psi \liff \exists i{::}\varphi \land \psi$}
+\fml{(\exists i{::}\varphi \land \psi) \lor (\exists i{:}\varphi{:}\chi)}
+\jst{teo.\ (C): $\exists i{:}\varphi{:}\chi \liff \exists i{::}\varphi \land \chi$}
+\fml{(\exists i{::}\varphi \land \psi) \lor (\exists i{::}\varphi \land \chi)}
+\jst{ax.\ existencial: $\exists i{::}\alpha \liff \lnot(\forall i{::}\lnot\alpha)$\ en ambos}
+\fml{\lnot(\forall i{::}\lnot(\varphi \land \psi)) \lor \lnot(\forall i{::}\lnot(\varphi \land \chi))}
+\jst{teo.\ (20): De Morgan inverso: $\lnot\alpha \lor \lnot\beta \liff \lnot(\alpha \land \beta)$}
+\fml{\lnot\bigl((\forall i{::}\lnot(\varphi \land \psi)) \land (\forall i{::}\lnot(\varphi \land \chi))\bigr)}
+\jst{ax.\ composicion $\forall$: $(\forall i{::}\alpha) \land (\forall i{::}\beta) \liff \forall i{::}\alpha \land \beta$}
+\fml{\lnot(\forall i{::}\lnot(\varphi \land \psi) \land \lnot(\varphi \land \chi))}
+\jst{teo.\ (21): De Morgan: $\lnot(\varphi \land \psi) \land \lnot(\varphi \land \chi) \liff \lnot((\varphi \land \psi) \lor (\varphi \land \chi))$}
+\fml{\lnot(\forall i{::}\lnot((\varphi \land \psi) \lor (\varphi \land \chi)))}
+\jst{ax.\ existencial inverso: $\lnot(\forall i{::}\lnot\alpha) \liff \exists i{::}\alpha$}
+\fml{\exists i{::}(\varphi \land \psi) \lor (\varphi \land \chi)}
+\jst{teo.\ (24): dist.\ $\land\lor$ inversa: $(\varphi \land \psi) \lor (\varphi \land \chi) \liff \varphi \land (\psi \lor \chi)$}
+\fml{\exists i{::}\varphi \land (\psi \lor \chi)}
+\jst{teo.\ (C) inverso: $\exists i{::}\varphi \land \alpha \liff \exists i{:}\varphi{:}\alpha$}
+\fml{\exists i{:}\varphi{:}\psi \lor \chi}
+\end{thmbox}
+
+% -----------------------------------------------------------
+\begin{thmbox}{E}{\chi \land (\exists i{:}\varphi{:}\psi) \liff (\exists i{:}\varphi{:}\psi \land \chi)\quad [i \notin \mathrm{libre}(\chi)]}{composicion $\exists$ con cte.}
+\fml{\chi \land (\exists i{:}\varphi{:}\psi)}
+\jst{teo.\ (C): $\exists i{:}\varphi{:}\psi \liff \exists i{::}\varphi \land \psi$}
+\fml{\chi \land (\exists i{::}\varphi \land \psi)}
+\jst{ax.\ distribucion con constante: $\chi \land (\exists i{::}\alpha) \liff \exists i{::}\alpha \land \chi$\ \ ($i \notin \mathrm{libre}(\chi)$)}
+\fml{\exists i{::}(\varphi \land \psi) \land \chi}
+\jst{ax.\ asoc.\ $\land$: $(\varphi \land \psi) \land \chi \liff \varphi \land (\psi \land \chi)$}
+\fml{\exists i{::}\varphi \land (\psi \land \chi)}
+\jst{teo.\ (C) inverso: $\exists i{::}\varphi \land \alpha \liff \exists i{:}\varphi{:}\alpha$}
+\fml{\exists i{:}\varphi{:}\psi \land \chi}
+\end{thmbox}
+
+% -----------------------------------------------------------
+\begin{thmbox}{F}{(\exists i{:}\varphi{:}\psi) \lor (\exists i{:}\chi{:}\psi) \liff (\exists i{:}\varphi \lor \chi{:}\psi)}{particion de rango $\exists$}
+\fml{(\exists i{:}\varphi{:}\psi) \lor (\exists i{:}\chi{:}\psi)}
+\jst{teo.\ (C): $\exists i{:}\varphi{:}\psi \liff \exists i{::}\varphi \land \psi$}
+\fml{(\exists i{::}\varphi \land \psi) \lor (\exists i{:}\chi{:}\psi)}
+\jst{teo.\ (C): $\exists i{:}\chi{:}\psi \liff \exists i{::}\chi \land \psi$}
+\fml{(\exists i{::}\varphi \land \psi) \lor (\exists i{::}\chi \land \psi)}
+\jst{teo.\ (D): $(\exists i{::}\alpha) \lor (\exists i{::}\beta) \liff \exists i{::}\alpha \lor \beta$}
+\fml{\exists i{::}(\varphi \land \psi) \lor (\chi \land \psi)}
+\jst{teo.\ (24): dist.\ $\land\lor$ inversa: $(\varphi \land \psi) \lor (\chi \land \psi) \liff (\varphi \lor \chi) \land \psi$}
+\fml{\exists i{::}(\varphi \lor \chi) \land \psi}
+\jst{teo.\ (C) inverso: $\exists i{::}\alpha \land \psi \liff \exists i{:}\alpha{:}\psi$}
+\fml{\exists i{:}\varphi \lor \chi{:}\psi}
+\end{thmbox}
+
+% -----------------------------------------------------------
+\begin{thmbox}{G}{(\forall i{:}\varphi{:}\psi \land \chi) \limp (\forall i{:}\varphi{:}\psi)}{debilitamiento $\forall$}
+\fml{(\forall i{:}\varphi{:}\psi \land \chi) \limp (\forall i{:}\varphi{:}\psi)}
+\jst{ax.\ termino: $\forall i{:}\varphi{:}\psi \land \chi \liff \forall i{::}\varphi \limp \psi \land \chi$}
+\fml{(\forall i{::}\varphi \limp \psi \land \chi) \limp (\forall i{:}\varphi{:}\psi)}
+\jst{ax.\ termino: $\forall i{:}\varphi{:}\psi \liff \forall i{::}\varphi \limp \psi$}
+\fml{(\forall i{::}\varphi \limp \psi \land \chi) \limp (\forall i{::}\varphi \limp \psi)}
+\jst{teo.\ (29): $\psi \land \chi \limp \psi$}
+\fml{(\forall i{::}\varphi \limp \psi \land \chi) \limp (\forall i{::}\varphi \limp \psi \land \chi \limp \psi)}
+\jst{teo.\ (33): transitividad $\limp$: $(\varphi \limp \psi \land \chi) \limp (\varphi \limp \psi)$}
+\fml{\forall i{::}(\varphi \limp \psi \land \chi) \limp (\varphi \limp \psi)}
+\jst{monotonia $\forall$: si $\forall i{::}\alpha \limp \beta$ entonces $(\forall i{::}\alpha) \limp (\forall i{::}\beta)$}
+\fml{\T}
+\end{thmbox}
+
+% -----------------------------------------------------------
+\begin{thmbox}{H}{(\forall i{:}\varphi{:}\psi) \limp (\forall i{:}\varphi \land \chi{:}\psi)}{fortalecimiento $\forall$}
+\fml{(\forall i{:}\varphi{:}\psi) \limp (\forall i{:}\varphi \land \chi{:}\psi)}
+\jst{ax.\ termino: $\forall i{:}\varphi{:}\psi \liff \forall i{::}\varphi \limp \psi$}
+\fml{(\forall i{::}\varphi \limp \psi) \limp (\forall i{:}\varphi \land \chi{:}\psi)}
+\jst{ax.\ termino: $\forall i{:}\varphi \land \chi{:}\psi \liff \forall i{::}\varphi \land \chi \limp \psi$}
+\fml{(\forall i{::}\varphi \limp \psi) \limp (\forall i{::}\varphi \land \chi \limp \psi)}
+\jst{teo.\ (29): $\varphi \land \chi \limp \varphi$}
+\fml{(\forall i{::}\varphi \limp \psi) \limp (\forall i{::}\varphi \land \chi \limp \varphi)}
+\jst{teo.\ (33): transitividad $\limp$: $(\varphi \land \chi \limp \varphi) \limp ((\varphi \limp \psi) \limp (\varphi \land \chi \limp \psi))$}
+\fml{\forall i{::}(\varphi \limp \psi) \limp (\varphi \land \chi \limp \psi)}
+\jst{monotonia $\forall$}
+\fml{\T}
+\end{thmbox}
+
+% -----------------------------------------------------------
+\begin{thmbox}{I}{(\exists i{:}\varphi{:}\psi) \limp (\exists i{:}\varphi{:}\psi \lor \chi)}{debilitamiento $\exists$}
+\fml{(\exists i{:}\varphi{:}\psi) \limp (\exists i{:}\varphi{:}\psi \lor \chi)}
+\jst{teo.\ (C): $\exists i{:}\varphi{:}\psi \liff \exists i{::}\varphi \land \psi$}
+\fml{(\exists i{::}\varphi \land \psi) \limp (\exists i{:}\varphi{:}\psi \lor \chi)}
+\jst{teo.\ (C): $\exists i{:}\varphi{:}\psi \lor \chi \liff \exists i{::}\varphi \land (\psi \lor \chi)$}
+\fml{(\exists i{::}\varphi \land \psi) \limp (\exists i{::}\varphi \land (\psi \lor \chi))}
+\jst{teo.\ (30): $\psi \limp \psi \lor \chi$}
+\fml{(\exists i{::}\varphi \land \psi) \limp (\exists i{::}\varphi \land \psi \limp \varphi \land (\psi \lor \chi))}
+\jst{teo.\ (38): $(\psi \limp \psi \lor \chi) \limp (\varphi \land \psi \limp \varphi \land (\psi \lor \chi))$}
+\fml{\forall i{::}(\varphi \land \psi) \limp \varphi \land (\psi \lor \chi)}
+\jst{monotonia $\exists$: si $\forall i{::}\alpha \limp \beta$ entonces $(\exists i{::}\alpha) \limp (\exists i{::}\beta)$}
+\fml{\T}
+\end{thmbox}
+
+% -----------------------------------------------------------
+\begin{thmbox}{J}{(\exists i{:}\varphi{:}\psi) \limp (\exists i{:}\varphi \lor \chi{:}\psi)}{fortalecimiento $\exists$}
+\fml{(\exists i{:}\varphi{:}\psi) \limp (\exists i{:}\varphi \lor \chi{:}\psi)}
+\jst{teo.\ (C): $\exists i{:}\varphi{:}\psi \liff \exists i{::}\varphi \land \psi$}
+\fml{(\exists i{::}\varphi \land \psi) \limp (\exists i{:}\varphi \lor \chi{:}\psi)}
+\jst{teo.\ (C): $\exists i{:}\varphi \lor \chi{:}\psi \liff \exists i{::}(\varphi \lor \chi) \land \psi$}
+\fml{(\exists i{::}\varphi \land \psi) \limp (\exists i{::}(\varphi \lor \chi) \land \psi)}
+\jst{teo.\ (24): dist.\ $\land\lor$: $(\varphi \lor \chi) \land \psi \liff (\varphi \land \psi) \lor (\chi \land \psi)$}
+\fml{(\exists i{::}\varphi \land \psi) \limp (\exists i{::}(\varphi \land \psi) \lor (\chi \land \psi))}
+\jst{teo.\ (30): $\varphi \land \psi \limp (\varphi \land \psi) \lor (\chi \land \psi)$}
+\fml{(\exists i{::}\varphi \land \psi) \limp (\exists i{::}\varphi \land \psi)}
+\jst{monotonia $\exists$}
+\fml{\T}
+\end{thmbox}
+
+\end{document}
